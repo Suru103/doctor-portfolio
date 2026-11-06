@@ -4,7 +4,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, Award, BookOpen, CalendarDays, Che
 import { doctor, expertise, journey, achievements, publications, gallery } from './content';
 
 const nav = ['About', 'Expertise', 'Experience', 'Achievements', 'Publications', 'Gallery', 'Contact'];
-const fade = { hidden: { opacity: 0, y: 22 }, show: { opacity: 1, y: 0, transition: { duration: .65, ease: 'easeOut' } } };
+const fade = { hidden: { opacity: 0, y: 22 }, show: { opacity: 1, y: 0, transition: { duration: .65, ease: 'easeOut' as const } } };
 const isPlaceholder = (v: string) => v.includes('[') || v.includes('XXXXXXXX');
 
 function App() {
