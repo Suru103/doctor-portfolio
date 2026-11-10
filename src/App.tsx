@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowRight, ArrowUpRight, Award, BookOpen, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Clock3, Download, GraduationCap, HeartHandshake, Mail, MapPin, Menu, MessageCircle, Phone, Plus, Search, Share2, ShieldCheck, Sparkles, Stethoscope, X } from 'lucide-react';
-import { doctor, expertise, journey, achievements, publications, gallery } from './content';
+import { doctor, expertise, journey, achievements, publications, gallery, procedures } from './content';
 
-const nav = ['About', 'Expertise', 'Experience', 'Achievements', 'Publications', 'Gallery', 'Contact'];
+const nav = ['About', 'Expertise', 'Procedures', 'Experience', 'Achievements', 'Publications', 'Gallery', 'Contact'];
 const fade = { hidden: { opacity: 0, y: 22 }, show: { opacity: 1, y: 0, transition: { duration: .65, ease: 'easeOut' as const } } };
 const isPlaceholder = (v: string) => v.includes('[') || v.includes('XXXXXXXX');
 
@@ -14,6 +14,7 @@ function App() {
   const [pubFilter, setPubFilter] = useState('All');
   const [pubSearch, setPubSearch] = useState('');
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+  const [selectedProcedure, setSelectedProcedure] = useState<(typeof procedures)[number] | null>(null);
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '', date: '', time: '', type: 'In-person enquiry', message: '', consent: false });
@@ -39,7 +40,7 @@ function App() {
 
   return <div className="site-shell">
     <header className="topbar"><a className="brand" href="#home" aria-label="Home"><span className="brand-mark">{doctor.initials}</span><span><b>{doctor.name}</b><small>PERSONAL MEDICAL PORTFOLIO</small></span></a>
-      <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>{nav.map(n => <button key={n} onClick={() => scrollTo(n.toLowerCase())}>{hindi ? ({About:'परिचय',Expertise:'विशेषज्ञता',Experience:'अनुभव',Achievements:'उपलब्धियाँ',Publications:'प्रकाशन',Gallery:'गैलरी',Contact:'संपर्क'} as any)[n] : n}</button>)}</nav>
+      <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>{nav.map(n => <button key={n} onClick={() => scrollTo(n.toLowerCase())}>{hindi ? ({About:'परिचय',Expertise:'विशेषज्ञता',Experience:'अनुभव',Achievements:'उपलब्धियाँ',Publications:'प्रकाशन',Gallery:'गैलरी',Contact:'संपर्क',Procedures:'प्रक्रियाएँ'} as any)[n] : n}</button>)}</nav>
       <div className="nav-actions"><button className="language" onClick={() => setHindi(!hindi)}>{hindi ? 'EN' : 'हिंदी'}</button><button className="button button-small" onClick={() => scrollTo('appointment')}>{hindi ? 'अपॉइंटमेंट' : 'Book Appointment'} <ArrowUpRight size={15}/></button><button className="menu-toggle" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X/> : <Menu/>}</button></div>
     </header>
 
@@ -61,6 +62,21 @@ function App() {
 
       <section className="section expertise-section" id="expertise"><div className="section-inner">{title('AREAS OF EXPERTISE','Focused knowledge. Thoughtful care.','Explore the doctor’s clinical focus areas. All speciality details below are placeholders until verified.')}<div className="expertise-grid">{expertise.map((item,i)=><motion.article {...reveal} className="expertise-card" key={item.title}><div className="card-topline"><span className="expertise-symbol">{item.icon}</span><span className="card-index">0{i+1}</span></div><h3>{item.title}</h3><p>{item.description}</p><button onClick={() => scrollTo('contact')} className="learn-link">Enquire <ArrowUpRight size={15}/></button></motion.article>)}</div></div></section>
 
+      <section className="section procedures-section" id="procedures">
+        <div className="section-inner">
+          {title('PROCEDURES & TREATMENTS','Explore available procedures.','Select a procedure to view an overview and the information areas planned for the doctor’s educational blog. All text below is demo placeholder content.')} 
+          <div className="procedures-grid">
+            {procedures.map((procedure, i) => <motion.article {...reveal} className={`procedure-card procedure-card-${i % 6}`} key={procedure.id}>
+              <button className="procedure-card-button" onClick={() => setSelectedProcedure(procedure)} aria-label={`View details for ${procedure.name}`}>
+                <span className="procedure-visual" aria-hidden="true"><span className="procedure-visual-number">{procedure.number}</span><span className="procedure-visual-orbit"/><span className="procedure-visual-mark">{procedure.name.split(/[ /-]/).filter(Boolean).slice(0,2).map(word=>word[0]).join('')}</span></span>
+                <span className="procedure-card-copy"><span className="procedure-kicker">PROCEDURE {procedure.number}</span><b>{procedure.name}</b><span className="procedure-view">View details <ArrowUpRight size={15}/></span></span>
+              </button>
+            </motion.article>)}
+          </div>
+          <p className="procedure-demo-note">Demo content only. All procedure information must be reviewed and approved by the doctor before publication.</p>
+        </div>
+      </section>
+
       <section className="section journey-section" id="experience"><div className="section-inner">{title('THE PROFESSIONAL JOURNEY','A journey shaped by learning.','Academic milestones and professional appointments will be added after verification.')}<div className="timeline">{journey.map((item,i)=><motion.div {...reveal} className="timeline-item" key={i}><div className="timeline-marker">{i===0?<GraduationCap size={18}/>:<Plus size={18}/>}</div><div className="timeline-year">{item.year}</div><div className="timeline-content"><h3>{item.title}</h3><b>{item.place}</b><p>{item.detail}</p></div></motion.div>)}</div></div></section>
 
       <section className="section recognition-section" id="achievements"><div className="section-inner">{title('MILESTONES & RECOGNITION','Recognition earned through dedication.','Awards, certifications and memberships will appear here once the details are confirmed.')}<div className="recognition-grid">{achievements.map((a,i)=><motion.div {...reveal} className="recognition-card" key={i}><span><Award size={21}/></span><div><small>RECOGNITION 0{i+1}</small><h3>{a}</h3></div><ArrowUpRight size={17}/></motion.div>)}</div></div></section>
@@ -80,6 +96,15 @@ function App() {
 
     <footer className="footer"><div className="footer-main"><div className="footer-brand"><a className="brand" href="#home"><span className="brand-mark">{doctor.initials}</span><span><b>{doctor.name}</b><small>PERSONAL MEDICAL PORTFOLIO</small></span></a><p>{doctor.intro}</p><span className="footer-affiliation">{doctor.affiliation}</span></div><div><h4>EXPLORE</h4>{['About','Expertise','Experience','Achievements','Publications','Gallery'].map(n=><button key={n} onClick={()=>scrollTo(n.toLowerCase())}>{n}</button>)}</div><div><h4>CONTACT</h4><button onClick={()=>scrollTo('appointment')}>Appointment enquiry</button><a href={doctor.mapUrl} target="_blank" rel="noreferrer">Hospital location</a><button onClick={shareProfile}>Share profile</button></div><div><h4>IMPORTANT</h4><a href="#disclaimer">Medical disclaimer</a><a href="#privacy">Privacy policy</a><a href="#terms">Terms of use</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} {doctor.name}. All rights reserved.</span><span>Independent professional profile · Not an official Medanta website</span></div><div className="legal-notes" id="disclaimer"><p><b>Medical disclaimer:</b> Website content is for general information and does not replace consultation with a qualified healthcare professional. In an emergency, contact local emergency services.</p><p id="privacy"><b>Privacy:</b> This starter does not store form submissions. Enquiry details are passed to the configured contact channel. Add a reviewed privacy policy before collecting patient information at scale.</p><p id="terms"><b>Terms:</b> Use of this website does not establish a doctor-patient relationship. Appointment requests are not confirmed until the hospital or doctor’s team confirms them.</p></div></footer>
     <a className="floating-whatsapp" href={waReady?waLink(`Hello ${doctor.name}, I visited your website and would like to enquire about an appointment at Medanta Noida.`):'#appointment'} onClick={e=>{if(!waReady){e.preventDefault();scrollTo('appointment')}}} target={waReady?'_blank':undefined} rel="noreferrer" aria-label="WhatsApp appointment enquiry"><MessageCircle size={21}/><span>WhatsApp enquiry</span></a>
+    {selectedProcedure && <div className="procedure-modal-backdrop" role="presentation" onClick={() => setSelectedProcedure(null)}>
+      <section className="procedure-modal" role="dialog" aria-modal="true" aria-labelledby="procedure-modal-title" onClick={e => e.stopPropagation()}>
+        <button className="procedure-modal-close" onClick={() => setSelectedProcedure(null)} aria-label="Close procedure details"><X size={20}/></button>
+        <div className="procedure-modal-heading"><span className="eyebrow">PROCEDURE GUIDE · DEMO</span><h2 id="procedure-modal-title">{selectedProcedure.name}</h2><p>This is a sample layout for the doctor’s future educational blog.</p></div>
+        <div className="procedure-demo-alert"><ShieldCheck size={17}/><span><b>Demo data only.</b> This placeholder text is not medical advice and has not been reviewed or approved by the doctor. Replace it with doctor-approved information before publishing.</span></div>
+        <div className="procedure-detail-list">{selectedProcedure.sections.map((item,i)=><article className="procedure-detail-item" key={item.heading}><span className="procedure-detail-index">0{i+1}</span><div><h3>{item.heading}</h3><p>{item.body}</p><small>DEMO CONTENT — FOR LAYOUT PREVIEW ONLY</small></div></article>)}</div>
+        <div className="procedure-modal-footer"><span>For demonstration purposes only</span><button className="button" onClick={() => {setSelectedProcedure(null); scrollTo('appointment');}}>Appointment enquiry <ArrowUpRight size={15}/></button></div>
+      </section>
+    </div>}
     {galleryIndex!==null&&<div className="lightbox" role="dialog" aria-modal="true" aria-label="Gallery preview"><button className="lightbox-close" onClick={()=>setGalleryIndex(null)} aria-label="Close"><X/></button><button className="lightbox-prev" onClick={()=>setGalleryIndex((galleryIndex+gallery.length-1)%gallery.length)} aria-label="Previous"><ChevronLeft/></button><div className="lightbox-content"><div className="gallery-placeholder large"><span>{gallery[galleryIndex].category}</span><div className="gallery-art"><span/><span/><span/></div><b>{gallery[galleryIndex].title}</b><small>{gallery[galleryIndex].caption}</small></div></div><button className="lightbox-next" onClick={()=>setGalleryIndex((galleryIndex+1)%gallery.length)} aria-label="Next"><ChevronRight/></button></div>}
   </div>;
 }
