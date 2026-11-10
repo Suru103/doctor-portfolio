@@ -14,3 +14,52 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media print{.topbar,.floating-whatsapp,.footer,.hero-buttons,.scroll-cue,.digital-actions,.appointment-section{display:none!important}.hero{min-height:500px}.section{padding:35px 0}.digital-card-section{background:#fff;padding:25px 0}.digital-card{box-shadow:none}}
 .consent-check{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:9px!important;margin-top:15px;color:#7c8c92!important;font-size:9px!important;font-weight:400!important;line-height:1.6}.consent-check input{width:14px!important;height:14px;margin:1px 0 0;accent-color:var(--teal);flex:none}.consent-check span{display:block}
+
+
+/* Procedures & treatments cards and demo article modal */
+.procedures-section{background:#0b0b0b;color:#fff;position:relative;overflow:hidden}
+.procedures-section .section-heading .eyebrow{color:#d7a13a}
+.procedures-section .section-heading h2{color:#fff}
+.procedures-section .section-heading>p{color:#b7b7b7}
+.procedures-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.procedure-card{min-width:0;background:#171717;border:1px solid #ffffff18;overflow:hidden;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.procedure-card:hover{transform:translateY(-6px);border-color:#d7a13a88;box-shadow:0 18px 40px #0009}
+.procedure-card-button{display:flex;flex-direction:column;text-align:left;width:100%;height:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer}
+.procedure-visual{height:215px;position:relative;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#d9d9d9,#777 55%,#242424);isolation:isolate}
+.procedure-card-1 .procedure-visual{background:linear-gradient(135deg,#e6e6e6,#a3a3a3 48%,#3c3c3c)}
+.procedure-card-2 .procedure-visual{background:linear-gradient(135deg,#c9c9c9,#555 65%,#171717)}
+.procedure-card-3 .procedure-visual{background:linear-gradient(135deg,#efefef,#999 48%,#333)}
+.procedure-card-4 .procedure-visual{background:linear-gradient(135deg,#d7d7d7,#777 60%,#252525)}
+.procedure-card-5 .procedure-visual{background:linear-gradient(135deg,#eee,#888 55%,#303030)}
+.procedure-visual:before,.procedure-visual:after{content:"";position:absolute;border:1px solid #ffffff8a;border-radius:50%;width:190px;height:190px;right:-42px;top:-72px;transition:transform .5s ease}
+.procedure-visual:after{width:135px;height:135px;right:22px;top:-30px;border-color:#ffffff55}
+.procedure-card:hover .procedure-visual:before{transform:scale(1.2) rotate(18deg)}
+.procedure-visual-number{position:absolute;left:17px;top:15px;font:500 10px Manrope;letter-spacing:.18em;color:#fff;z-index:1}
+.procedure-visual-mark{font:500 clamp(42px,6vw,76px) Manrope;letter-spacing:-.08em;color:#ffffffd9;text-shadow:0 4px 24px #0005;z-index:1;transition:transform .4s ease}
+.procedure-card:hover .procedure-visual-mark{transform:scale(1.12)}
+.procedure-visual-orbit{position:absolute;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,#ffffff35 0 30%,#ffffff10 65%,transparent 70%);filter:blur(1px)}
+.procedure-card-copy{padding:18px 18px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.procedure-kicker{font-size:8px;letter-spacing:.16em;color:#d5a03d}
+.procedure-card-copy>b{font:700 15px/1.4 Manrope;color:#fff;min-height:42px}
+.procedure-view{display:flex;align-items:center;justify-content:space-between;color:#e1b45e;font-size:10px;font-weight:700;margin-top:4px}
+.procedure-demo-note{color:#a8a8a8;font-size:10px;line-height:1.7;margin:22px 0 0}
+.procedure-modal-backdrop{position:fixed;inset:0;z-index:80;background:#05090de8;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px}
+.procedure-modal{position:relative;width:min(780px,100%);max-height:90vh;overflow:auto;background:#fff;color:#203746;border-radius:8px;padding:38px 42px;box-shadow:0 25px 90px #0008}
+.procedure-modal-close{position:absolute;right:18px;top:18px;width:38px;height:38px;border:1px solid #e5e9e9;border-radius:50%;background:#fff;color:#24404d;display:grid;place-items:center}
+.procedure-modal-heading{padding-right:42px}
+.procedure-modal-heading .eyebrow{color:#b88935}
+.procedure-modal-heading h2{font:700 clamp(27px,4vw,38px)/1.2 Manrope;color:#153344;margin:12px 0 8px}
+.procedure-modal-heading>p{font-size:12px;color:#7c8b91;line-height:1.7}
+.procedure-demo-alert{display:flex;align-items:flex-start;gap:11px;background:#fff8e9;border:1px solid #f0dfbd;border-radius:5px;padding:14px;margin:22px 0}
+.procedure-demo-alert svg{flex:none;color:#b88935;margin-top:1px}
+.procedure-demo-alert span{font-size:10px;line-height:1.7;color:#725b32}
+.procedure-detail-list{border-top:1px solid #e6ebec}
+.procedure-detail-item{display:grid;grid-template-columns:38px 1fr;gap:13px;padding:20px 0;border-bottom:1px solid #e6ebec}
+.procedure-detail-index{font:600 11px Manrope;color:#b88935;padding-top:2px}
+.procedure-detail-item h3{font:700 14px Manrope;color:#17384a;margin:0 0 7px}
+.procedure-detail-item p{font-size:11px;line-height:1.8;color:#6f7e84;margin:0}
+.procedure-detail-item small{display:block;font-size:8px;letter-spacing:.12em;color:#b18a48;margin-top:8px}
+.procedure-modal-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:22px}
+.procedure-modal-footer>span{font-size:9px;color:#8c989d}
+@media(max-width:850px){.procedures-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.procedures-grid{grid-template-columns:1fr 1fr;gap:9px}.procedure-visual{height:155px}.procedure-card-copy{padding:13px 12px}.procedure-card-copy>b{font-size:12px;min-height:38px}.procedure-modal-backdrop{padding:10px}.procedure-modal{max-height:94vh;padding:30px 20px 22px}.procedure-modal-close{right:12px;top:12px}.procedure-modal-footer{align-items:flex-start;flex-direction:column}.procedure-detail-item{grid-template-columns:27px 1fr;gap:8px}}
